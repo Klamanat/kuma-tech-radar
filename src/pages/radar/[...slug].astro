@@ -1,0 +1,44 @@
+---
+import { getCollection, render } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+
+export async function getStaticPaths() {
+  const posts = await getCollection("radar", ({ data }) => !data.draft);
+  return posts.map((post) => ({
+    params: { slug: post.id },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const fmt = (d: Date) =>
+  new Intl.DateTimeFormat("th-TH", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(d);
+---
+
+<BaseLayout title={`${post.data.title} — Tech Radar`} description={post.data.summary}>
+  <article class="container">
+    <header class="post-header">
+      <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+      <h1>{post.data.title}</h1>
+      <div class="topics">
+        {post.data.topics.map((t) => (
+          <a class="chip chip-link" href={`/topic/${t}/`} data-topic={t}>{t}</a>
+        ))}
+      </div>
+      <p class="summary">{post.data.summary}</p>
+    </header>
+
+    <div class="prose">
+      <Content />
+    </div>
+
+    <a class="back-link" href="/">← กลับไปหน้าโพสต์ทั้งหมด</a>
+  </article>
+</BaseLayout>

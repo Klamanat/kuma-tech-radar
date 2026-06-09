@@ -1,0 +1,23 @@
+---
+import { TOPICS, TOPIC_LABEL } from "../lib/topics";
+
+interface Props {
+  active?: string; // "all" | Topic
+}
+const { active = "all" } = Astro.props;
+---
+
+<nav class="filter-bar" aria-label="กรองตามหัวข้อ">
+  <a href="/" class:list={["filter-pill", { active: active === "all" }]}>ทั้งหมด</a>
+  {
+    TOPICS.map((t) => (
+      <a
+        href={`/topic/${t}/`}
+        data-topic={t}
+        class:list={["filter-pill", "has-dot", { active: active === t }]}
+      >
+        {TOPIC_LABEL[t]}
+      </a>
+    ))
+  }
+</nav>

@@ -1,0 +1,27 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../layouts/BaseLayout.astro";
+import FilterBar from "../components/FilterBar.astro";
+import PostList from "../components/PostList.astro";
+
+const posts = (await getCollection("radar", ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Tech Radar — คลังความรู้เทคโนโลยีรายวัน">
+  <section class="hero">
+    <div class="container">
+      <h1>📡 Tech Radar</h1>
+      <p>เกาะติดเทคโนโลยีใหม่รายวัน — AI · Cloud · Web · Startups<br />รวบรวมและสรุปเป็นภาษาไทยโดย Kuma AI</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <FilterBar active="all" />
+    <PostList
+      posts={posts}
+      empty="ยังไม่มีโพสต์ — รัน `npm run new` เพื่อสร้าง digest แรก"
+    />
+  </div>
+</BaseLayout>

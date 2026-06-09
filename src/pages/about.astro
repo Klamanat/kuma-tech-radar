@@ -1,0 +1,33 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout title="เกี่ยวกับ — Tech Radar">
+  <article class="container">
+    <header class="post-header">
+      <h1>เกี่ยวกับ Tech Radar</h1>
+      <p class="summary">คลังความรู้เทคโนโลยีรายวัน ในรูปแบบบล็อก สร้างและดูแลโดย Kuma AI</p>
+    </header>
+    <div class="prose">
+      <h2>คืออะไร</h2>
+      <p>
+        Tech Radar คือคลังความรู้ที่รวบรวมความเคลื่อนไหวด้านเทคโนโลยีใหม่ ๆ —
+        <strong>AI/LLM, Cloud/DevOps, Web/Frameworks และ Startups</strong> —
+        สรุปเป็นภาษาไทยเป็นโพสต์รายวัน แต่ละโพสต์มีลิงก์ reference กำกับทุกหัวข้อ
+        เพื่อให้ตามไปอ่านต้นทางได้
+      </p>
+
+      <h2>หลักการ</h2>
+      <blockquote>"The Oracle Keeps the Human Human"</blockquote>
+      <ul>
+        <li><strong>Nothing is Deleted</strong> — โพสต์สะสมเป็นคลัง ไม่ลบ ไทม์ไลน์คือความจริง</li>
+        <li><strong>แยกแหล่งชัด</strong> — ข้อมูลจาก official source กับ aggregator/ค่าประเมิน จะมาร์คต่างกัน (⚠️ = ยังไม่ verify)</li>
+        <li><strong>External Brain</strong> — สะท้อนความจริง ไม่ตัดสินใจแทนคุณ</li>
+      </ul>
+
+      <h2>เพิ่มโพสต์ใหม่</h2>
+      <p>วางไฟล์ markdown ลงใน <code>src/content/radar/</code> (หรือรัน <code>npm run new</code>) แล้ว build ใหม่</p>
+    </div>
+    <a class="back-link" href="/">← กลับไปหน้าโพสต์ทั้งหมด</a>
+  </article>
+</BaseLayout>

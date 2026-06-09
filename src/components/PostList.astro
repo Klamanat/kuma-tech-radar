@@ -1,0 +1,39 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  posts: CollectionEntry<"radar">[];
+  empty?: string;
+}
+const { posts, empty = "ยังไม่มีโพสต์ในหมวดนี้" } = Astro.props;
+
+const fmt = (d: Date) =>
+  new Intl.DateTimeFormat("th-TH", {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(d);
+---
+
+<ul class="post-list">
+  {
+    posts.map((post) => (
+      <li>
+        <a class="post-card" href={`/radar/${post.id}/`}>
+          <time datetime={post.data.date.toISOString()}>{fmt(post.data.date)}</time>
+          <h2>{post.data.title}</h2>
+          <p>{post.data.summary}</p>
+          <div class="topics">
+            {post.data.topics.map((t) => (
+              <span class="chip" data-topic={t}>
+                {t}
+              </span>
+            ))}
+          </div>
+        </a>
+      </li>
+    ))
+  }
+  {posts.length === 0 && <p class="empty">{empty}</p>}
+</ul>

@@ -1,0 +1,16 @@
+{
+  "name": "tech-doc",
+  "version": "0.1.0",
+  "type": "module",
+  "private": true,
+  "description": "Kuma AI Tech Radar — คลังความรู้เทคโนโลยีรายวัน ในรูปแบบบล็อก",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "new": "node scripts/new-digest.mjs"
+  },
+  "dependencies": {
+    "astro": "^5.7.0"
+  }
+}

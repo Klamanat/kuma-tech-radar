@@ -1,0 +1,42 @@
+---
+import { getCollection } from "astro:content";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import FilterBar from "../../components/FilterBar.astro";
+import PostList from "../../components/PostList.astro";
+import { TOPICS, TOPIC_LABEL, type Topic } from "../../lib/topics";
+
+export async function getStaticPaths() {
+  const all = await getCollection("radar", ({ data }) => !data.draft);
+  return TOPICS.map((topic) => ({
+    params: { topic },
+    props: {
+      topic,
+      posts: all
+        .filter((p) => p.data.topics.includes(topic))
+        .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf()),
+    },
+  }));
+}
+
+const { topic, posts } = Astro.props as {
+  topic: Topic;
+  posts: Awaited<ReturnType<typeof getCollection<"radar">>>;
+};
+---
+
+<BaseLayout
+  title={`${TOPIC_LABEL[topic]} — Tech Radar`}
+  description={`โพสต์หมวด ${TOPIC_LABEL[topic]} ใน Tech Radar`}
+>
+  <section class="hero">
+    <div class="container">
+      <h1><span class="chip chip-lg" data-topic={topic}>{topic}</span></h1>
+      <p>โพสต์ทั้งหมดในหมวด <strong>{TOPIC_LABEL[topic]}</strong> — {posts.length} โพสต์</p>
+    </div>
+  </section>
+
+  <div class="container">
+    <FilterBar active={topic} />
+    <PostList posts={posts} empty={`ยังไม่มีโพสต์ในหมวด ${TOPIC_LABEL[topic]}`} />
+  </div>
+</BaseLayout>
